@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="title">Sudoku</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 data-i18n="title">Sudoku</h1>
+            <div class="controls">
+                <div class="theme-selector">
+                    <label data-i18n="theme">Tema:</label>
+                    <select id="theme-select">
+                        <option value="wildtech" data-i18n="theme.wildtech">Wildtech</option>
+                        <option value="severance" data-i18n="theme.severance">Severance</option>
+                    </select>
+                </div>
+                <div class="language-selector">
+                    <label data-i18n="language">Idioma:</label>
+                    <select id="language-select">
+                        <option value="pt">Português</option>
+                        <option value="en">English</option>
+                        <option value="es">Español</option>
+                    </select>
+                </div>
+                <div class="difficulty-selector">
+                    <label data-i18n="difficulty">Dificuldade:</label>
+                    <select id="difficulty-select">
+                        <option value="easy" data-i18n="difficulty.easy">Fácil</option>
+                        <option value="medium" data-i18n="difficulty.medium">Médio</option>
+                        <option value="hard" data-i18n="difficulty.hard">Difícil</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="game-info">
+                <div class="timer">
+                    <span data-i18n="time">Tempo:</span>
+                    <span id="timer-display">00:00</span>
+                </div>
+                <div class="records">
+                    <button id="show-records" data-i18n="records">Recordes</button>
+                </div>
+            </div>
+
+            <div class="sudoku-container">
+                <div id="sudoku-grid" class="sudoku-grid"></div>
+            </div>
+
+            <div class="game-controls">
+                <button id="new-game" data-i18n="newGame">Novo Jogo</button>
+                <button id="check-solution" data-i18n="checkSolution">Verificar</button>
+                <button id="hint" data-i18n="hint">Dica</button>
+                <button id="reset" data-i18n="reset">Reiniciar</button>
+            </div>
+
+            <div id="victory-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h2 data-i18n="victory">Parabéns!</h2>
+                    <p data-i18n="victoryMessage">Você completou o Sudoku!</p>
+                    <p><span data-i18n="yourTime">Seu tempo:</span> <span id="final-time"></span></p>
+                    <p id="record-message"></p>
+                    <button id="close-victory" data-i18n="close">Fechar</button>
+                </div>
+            </div>
+
+            <div id="records-modal" class="modal hidden">
+                <div class="modal-content">
+                    <h2 data-i18n="records">Recordes</h2>
+                    <div id="records-list"></div>
+                    <button id="close-records" data-i18n="close">Fechar</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>
+                <a href="https://github.com/dwildt/sudoku" target="_blank" data-i18n="sourceCode">Código Fonte</a>
+                |
+                <a href="https://github.com/sponsors/dwildt" target="_blank" data-i18n="sponsor">GitHub Sponsors</a>
+            </p>
+            <p data-i18n="madeWith">Feito com Claude Code</p>
+        </footer>
+    </div>
+
+    <script src="js/sudoku.js"></script>
+    <script src="js/i18n.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

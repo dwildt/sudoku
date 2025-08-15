@@ -1,0 +1,502 @@
+:root {
+    --wildtech-primary: #ff7b00;
+    --wildtech-secondary: #8b4513;
+    --wildtech-bg: #fff;
+    --wildtech-text: #333;
+    --wildtech-border: #ddd;
+    --wildtech-hover: #ff9533;
+    
+    --severance-primary: #2563eb;
+    --severance-secondary: #1e40af;
+    --severance-bg: #f8fafc;
+    --severance-text: #1e293b;
+    --severance-border: #cbd5e1;
+    --severance-hover: #3b82f6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--wildtech-bg);
+    color: var(--wildtech-text);
+    transition: all 0.3s ease;
+}
+
+body.wildtech-theme {
+    background-color: var(--wildtech-bg);
+    color: var(--wildtech-text);
+}
+
+body.wildtech-theme .sudoku-grid {
+    border-color: var(--wildtech-primary);
+    background-color: var(--wildtech-primary);
+}
+
+body.wildtech-theme .sudoku-cell.selected {
+    background-color: var(--wildtech-primary);
+}
+
+body.wildtech-theme .sudoku-cell.given {
+    background-color: var(--wildtech-secondary);
+}
+
+body.wildtech-theme .sudoku-cell:hover:not(.given) {
+    background-color: var(--wildtech-hover);
+}
+
+body.wildtech-theme header h1,
+body.wildtech-theme .timer {
+    color: var(--wildtech-primary);
+}
+
+body.wildtech-theme .game-controls button,
+body.wildtech-theme .modal-content button {
+    background-color: var(--wildtech-primary);
+    border-color: var(--wildtech-primary);
+}
+
+body.wildtech-theme .game-controls button:hover,
+body.wildtech-theme .modal-content button:hover {
+    background-color: var(--wildtech-hover);
+}
+
+body.wildtech-theme .modal-content {
+    border-color: var(--wildtech-primary);
+}
+
+body.wildtech-theme .modal-content h2 {
+    color: var(--wildtech-primary);
+}
+
+body.wildtech-theme footer a {
+    color: var(--wildtech-primary);
+}
+
+body.wildtech-theme .controls label {
+    color: var(--wildtech-text);
+}
+
+body.wildtech-theme .controls select, 
+body.wildtech-theme .controls button {
+    border-color: var(--wildtech-border);
+    background-color: var(--wildtech-bg);
+    color: var(--wildtech-text);
+}
+
+body.wildtech-theme #show-records {
+    border-color: var(--wildtech-primary);
+    background-color: var(--wildtech-primary);
+    color: white;
+}
+
+body.wildtech-theme #show-records:hover {
+    background-color: var(--wildtech-hover);
+}
+
+body.wildtech-theme .record-item {
+    border-bottom-color: var(--wildtech-border);
+}
+
+body.wildtech-theme .sudoku-cell:nth-child(3n) {
+    border-right-color: var(--wildtech-primary);
+}
+
+body.wildtech-theme .sudoku-cell:nth-child(n+19):nth-child(-n+27),
+body.wildtech-theme .sudoku-cell:nth-child(n+46):nth-child(-n+54) {
+    border-bottom-color: var(--wildtech-primary);
+}
+
+body.severance-theme {
+    background-color: var(--severance-bg);
+    color: var(--severance-text);
+}
+
+body.severance-theme .sudoku-grid {
+    border-color: var(--severance-primary);
+    background-color: var(--severance-primary);
+}
+
+body.severance-theme .sudoku-cell.selected {
+    background-color: var(--severance-primary);
+}
+
+body.severance-theme .sudoku-cell.given {
+    background-color: var(--severance-secondary);
+}
+
+body.severance-theme .sudoku-cell:hover:not(.given) {
+    background-color: var(--severance-hover);
+}
+
+body.severance-theme header h1,
+body.severance-theme .timer {
+    color: var(--severance-primary);
+}
+
+body.severance-theme .game-controls button,
+body.severance-theme .modal-content button {
+    background-color: var(--severance-primary);
+    border-color: var(--severance-primary);
+}
+
+body.severance-theme .game-controls button:hover,
+body.severance-theme .modal-content button:hover {
+    background-color: var(--severance-hover);
+}
+
+body.severance-theme .modal-content {
+    border-color: var(--severance-primary);
+}
+
+body.severance-theme .modal-content h2 {
+    color: var(--severance-primary);
+}
+
+body.severance-theme footer a {
+    color: var(--severance-primary);
+}
+
+body.severance-theme .controls label {
+    color: var(--severance-text);
+}
+
+body.severance-theme .controls select, 
+body.severance-theme .controls button {
+    border-color: var(--severance-border);
+    background-color: var(--severance-bg);
+    color: var(--severance-text);
+}
+
+body.severance-theme #show-records {
+    border-color: var(--severance-primary);
+    background-color: var(--severance-primary);
+    color: white;
+}
+
+body.severance-theme #show-records:hover {
+    background-color: var(--severance-hover);
+}
+
+body.severance-theme .record-item {
+    border-bottom-color: var(--severance-border);
+}
+
+body.severance-theme .sudoku-cell:nth-child(3n) {
+    border-right-color: var(--severance-primary);
+}
+
+body.severance-theme .sudoku-cell:nth-child(n+19):nth-child(-n+27),
+body.severance-theme .sudoku-cell:nth-child(n+46):nth-child(-n+54) {
+    border-bottom-color: var(--severance-primary);
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.controls > div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.controls label {
+    font-weight: bold;
+}
+
+.controls select, .controls button {
+    padding: 8px 12px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+body.wildtech-theme .controls select:hover, 
+body.wildtech-theme .controls button:hover {
+    border-color: var(--wildtech-primary);
+}
+
+body.wildtech-theme .controls select:focus, 
+body.wildtech-theme .controls button:focus {
+    outline: none;
+    border-color: var(--wildtech-primary);
+    box-shadow: 0 0 0 2px rgba(255, 123, 0, 0.2);
+}
+
+body.severance-theme .controls select:hover, 
+body.severance-theme .controls button:hover {
+    border-color: var(--severance-primary);
+}
+
+body.severance-theme .controls select:focus, 
+body.severance-theme .controls button:focus {
+    outline: none;
+    border-color: var(--severance-primary);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-info {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 20px;
+}
+
+.timer {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.sudoku-container {
+    margin: 20px 0;
+}
+
+.sudoku-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    gap: 1px;
+    border: 3px solid #ddd;
+    background-color: #ddd;
+    width: 450px;
+    height: 450px;
+}
+
+.sudoku-cell {
+    background-color: #fff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sudoku-cell:hover:not(.given) {
+    background-color: #f0f0f0;
+}
+
+.sudoku-cell.selected {
+    background-color: #007bff;
+    color: white;
+}
+
+.sudoku-cell.given {
+    background-color: #6c757d;
+    color: white;
+    cursor: not-allowed;
+}
+
+.sudoku-cell.error {
+    background-color: #dc2626;
+    color: white;
+}
+
+.sudoku-cell.hint {
+    background-color: #16a34a;
+    color: white;
+}
+
+.sudoku-cell:nth-child(3n) {
+    border-right: 2px solid #007bff;
+}
+
+.sudoku-cell:nth-child(n+19):nth-child(-n+27),
+.sudoku-cell:nth-child(n+46):nth-child(-n+54) {
+    border-bottom: 2px solid #007bff;
+}
+
+.game-controls {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.game-controls button {
+    padding: 12px 20px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.game-controls button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.game-controls button:active {
+    transform: translateY(0);
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    border: 2px solid #007bff;
+}
+
+.modal-content h2 {
+    color: #007bff;
+    margin-bottom: 15px;
+}
+
+.modal-content button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+#records-list {
+    text-align: left;
+    margin: 20px 0;
+}
+
+.record-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid #ddd;
+    color: #333;
+}
+
+footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    header h1 {
+        font-size: 2em;
+    }
+    
+    .controls {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .sudoku-grid {
+        width: 320px;
+        height: 320px;
+    }
+    
+    .sudoku-cell {
+        font-size: 1.2em;
+    }
+    
+    .game-controls {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .game-controls button {
+        width: 200px;
+    }
+    
+    .game-info {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .sudoku-grid {
+        width: 280px;
+        height: 280px;
+    }
+    
+    .sudoku-cell {
+        font-size: 1em;
+    }
+}
