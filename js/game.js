@@ -1,6 +1,7 @@
 class SudokuGame {
     constructor() {
-        this.generator = new SudokuGenerator();
+        this.currentSize = 9;
+        this.generator = new SudokuGenerator(this.currentSize);
         this.currentPuzzle = null;
         this.currentSolution = null;
         this.playerGrid = null;
@@ -30,6 +31,12 @@ class SudokuGame {
             this.currentDifficulty = e.target.value;
             this.newGame();
         });
+        
+        document.getElementById('size-select').addEventListener('change', (e) => {
+            this.currentSize = parseInt(e.target.value);
+            this.generator = new SudokuGenerator(this.currentSize);
+            this.newGame();
+        });
     }
 
     newGame() {
@@ -48,8 +55,8 @@ class SudokuGame {
 
     identifyGivenCells() {
         this.givenCells.clear();
-        for (let row = 0; row < 9; row++) {
-            for (let col = 0; col < 9; col++) {
+        for (let row = 0; row < this.currentSize; row++) {
+            for (let col = 0; col < this.currentSize; col++) {
                 if (this.currentPuzzle[row][col] !== 0) {
                     this.givenCells.add(`${row}-${col}`);
                 }
@@ -60,9 +67,10 @@ class SudokuGame {
     renderGrid() {
         const gridElement = document.getElementById('sudoku-grid');
         gridElement.innerHTML = '';
+        gridElement.className = `sudoku-grid size-${this.currentSize}`;
 
-        for (let row = 0; row < 9; row++) {
-            for (let col = 0; col < 9; col++) {
+        for (let row = 0; row < this.currentSize; row++) {
+            for (let col = 0; col < this.currentSize; col++) {
                 const cell = document.createElement('div');
                 cell.className = 'sudoku-cell';
                 cell.dataset.row = row;
@@ -100,7 +108,7 @@ class SudokuGame {
         
         const { row, col } = this.selectedCell;
         
-        if (e.key >= '1' && e.key <= '9') {
+        if (e.key >= '1' && e.key <= this.currentSize.toString()) {
             const num = parseInt(e.key);
             this.makeMove(row, col, num);
         } else if (e.key === 'Delete' || e.key === 'Backspace' || e.key === '0') {
@@ -135,8 +143,8 @@ class SudokuGame {
             cell.classList.remove('error');
         });
         
-        for (let row = 0; row < 9; row++) {
-            for (let col = 0; col < 9; col++) {
+        for (let row = 0; row < this.currentSize; row++) {
+            for (let col = 0; col < this.currentSize; col++) {
                 const value = this.playerGrid[row][col];
                 if (value !== 0 && !SudokuValidator.isValidMove(this.playerGrid, row, col, value)) {
                     const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
@@ -230,6 +238,7 @@ class SudokuGame {
         const newRecord = {
             time,
             difficulty: this.currentDifficulty,
+            size: this.currentSize,
             date: new Date().toISOString(),
             hintsUsed: this.hintsUsed
         };
@@ -259,12 +268,15 @@ class SudokuGame {
         if (records.length === 0) {
             recordsList.innerHTML = `<p>${i18n.t('noRecords')}</p>`;
         } else {
-            recordsList.innerHTML = records.map((record, index) => `
-                <div class="record-item">
-                    <span>#${index + 1} - ${i18n.t('difficulty.' + record.difficulty)}</span>
-                    <span>${this.formatTime(record.time)}</span>
-                </div>
-            `).join('');
+            recordsList.innerHTML = records.map((record, index) => {
+                const sizeText = record.size ? `${record.size}x${record.size}` : '9x9';
+                return `
+                    <div class="record-item">
+                        <span>#${index + 1} - ${sizeText} ${i18n.t('difficulty.' + record.difficulty)}</span>
+                        <span>${this.formatTime(record.time)}</span>
+                    </div>
+                `;
+            }).join('');
         }
         
         document.getElementById('records-modal').classList.remove('hidden');

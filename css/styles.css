@@ -102,12 +102,33 @@ body.wildtech-theme .record-item {
     border-bottom-color: var(--wildtech-border);
 }
 
-body.wildtech-theme .sudoku-cell:nth-child(3n) {
+/* Wildtech theme borders */
+body.wildtech-theme .sudoku-grid.size-4 .sudoku-cell:nth-child(2),
+body.wildtech-theme .sudoku-grid.size-4 .sudoku-cell:nth-child(6),
+body.wildtech-theme .sudoku-grid.size-4 .sudoku-cell:nth-child(10),
+body.wildtech-theme .sudoku-grid.size-4 .sudoku-cell:nth-child(14) {
     border-right-color: var(--wildtech-primary);
 }
 
-body.wildtech-theme .sudoku-cell:nth-child(n+19):nth-child(-n+27),
-body.wildtech-theme .sudoku-cell:nth-child(n+46):nth-child(-n+54) {
+body.wildtech-theme .sudoku-grid.size-4 .sudoku-cell:nth-child(n+5):nth-child(-n+8) {
+    border-bottom-color: var(--wildtech-primary);
+}
+
+body.wildtech-theme .sudoku-grid.size-6 .sudoku-cell:nth-child(3n) {
+    border-right-color: var(--wildtech-primary);
+}
+
+body.wildtech-theme .sudoku-grid.size-6 .sudoku-cell:nth-child(n+7):nth-child(-n+12),
+body.wildtech-theme .sudoku-grid.size-6 .sudoku-cell:nth-child(n+19):nth-child(-n+24) {
+    border-bottom-color: var(--wildtech-primary);
+}
+
+body.wildtech-theme .sudoku-grid.size-9 .sudoku-cell:nth-child(3n) {
+    border-right-color: var(--wildtech-primary);
+}
+
+body.wildtech-theme .sudoku-grid.size-9 .sudoku-cell:nth-child(n+19):nth-child(-n+27),
+body.wildtech-theme .sudoku-grid.size-9 .sudoku-cell:nth-child(n+46):nth-child(-n+54) {
     border-bottom-color: var(--wildtech-primary);
 }
 
@@ -186,12 +207,33 @@ body.severance-theme .record-item {
     border-bottom-color: var(--severance-border);
 }
 
-body.severance-theme .sudoku-cell:nth-child(3n) {
+/* Severance theme borders */
+body.severance-theme .sudoku-grid.size-4 .sudoku-cell:nth-child(2),
+body.severance-theme .sudoku-grid.size-4 .sudoku-cell:nth-child(6),
+body.severance-theme .sudoku-grid.size-4 .sudoku-cell:nth-child(10),
+body.severance-theme .sudoku-grid.size-4 .sudoku-cell:nth-child(14) {
     border-right-color: var(--severance-primary);
 }
 
-body.severance-theme .sudoku-cell:nth-child(n+19):nth-child(-n+27),
-body.severance-theme .sudoku-cell:nth-child(n+46):nth-child(-n+54) {
+body.severance-theme .sudoku-grid.size-4 .sudoku-cell:nth-child(n+5):nth-child(-n+8) {
+    border-bottom-color: var(--severance-primary);
+}
+
+body.severance-theme .sudoku-grid.size-6 .sudoku-cell:nth-child(3n) {
+    border-right-color: var(--severance-primary);
+}
+
+body.severance-theme .sudoku-grid.size-6 .sudoku-cell:nth-child(n+7):nth-child(-n+12),
+body.severance-theme .sudoku-grid.size-6 .sudoku-cell:nth-child(n+19):nth-child(-n+24) {
+    border-bottom-color: var(--severance-primary);
+}
+
+body.severance-theme .sudoku-grid.size-9 .sudoku-cell:nth-child(3n) {
+    border-right-color: var(--severance-primary);
+}
+
+body.severance-theme .sudoku-grid.size-9 .sudoku-cell:nth-child(n+19):nth-child(-n+27),
+body.severance-theme .sudoku-grid.size-9 .sudoku-cell:nth-child(n+46):nth-child(-n+54) {
     border-bottom-color: var(--severance-primary);
 }
 
@@ -293,11 +335,30 @@ main {
 
 .sudoku-grid {
     display: grid;
-    grid-template-columns: repeat(9, 1fr);
-    grid-template-rows: repeat(9, 1fr);
     gap: 1px;
     border: 3px solid #ddd;
     background-color: #ddd;
+    width: 450px;
+    height: 450px;
+}
+
+.sudoku-grid.size-4 {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    width: 300px;
+    height: 300px;
+}
+
+.sudoku-grid.size-6 {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    width: 360px;
+    height: 360px;
+}
+
+.sudoku-grid.size-9 {
+    grid-template-columns: repeat(9, 1fr);
+    grid-template-rows: repeat(9, 1fr);
     width: 450px;
     height: 450px;
 }
@@ -340,12 +401,35 @@ main {
     color: white;
 }
 
-.sudoku-cell:nth-child(3n) {
+/* Bordas das caixas para 4x4 (2x2 boxes) */
+.sudoku-grid.size-4 .sudoku-cell:nth-child(2),
+.sudoku-grid.size-4 .sudoku-cell:nth-child(6),
+.sudoku-grid.size-4 .sudoku-cell:nth-child(10),
+.sudoku-grid.size-4 .sudoku-cell:nth-child(14) {
     border-right: 2px solid #007bff;
 }
 
-.sudoku-cell:nth-child(n+19):nth-child(-n+27),
-.sudoku-cell:nth-child(n+46):nth-child(-n+54) {
+.sudoku-grid.size-4 .sudoku-cell:nth-child(n+5):nth-child(-n+8) {
+    border-bottom: 2px solid #007bff;
+}
+
+/* Bordas das caixas para 6x6 (3x2 boxes) */
+.sudoku-grid.size-6 .sudoku-cell:nth-child(3n) {
+    border-right: 2px solid #007bff;
+}
+
+.sudoku-grid.size-6 .sudoku-cell:nth-child(n+7):nth-child(-n+12),
+.sudoku-grid.size-6 .sudoku-cell:nth-child(n+19):nth-child(-n+24) {
+    border-bottom: 2px solid #007bff;
+}
+
+/* Bordas das caixas para 9x9 (3x3 boxes) */
+.sudoku-grid.size-9 .sudoku-cell:nth-child(3n) {
+    border-right: 2px solid #007bff;
+}
+
+.sudoku-grid.size-9 .sudoku-cell:nth-child(n+19):nth-child(-n+27),
+.sudoku-grid.size-9 .sudoku-cell:nth-child(n+46):nth-child(-n+54) {
     border-bottom: 2px solid #007bff;
 }
 
@@ -464,7 +548,17 @@ footer a:hover {
         gap: 10px;
     }
     
-    .sudoku-grid {
+    .sudoku-grid.size-4 {
+        width: 240px;
+        height: 240px;
+    }
+    
+    .sudoku-grid.size-6 {
+        width: 288px;
+        height: 288px;
+    }
+    
+    .sudoku-grid.size-9 {
         width: 320px;
         height: 320px;
     }
@@ -491,7 +585,17 @@ footer a:hover {
 }
 
 @media (max-width: 480px) {
-    .sudoku-grid {
+    .sudoku-grid.size-4 {
+        width: 200px;
+        height: 200px;
+    }
+    
+    .sudoku-grid.size-6 {
+        width: 240px;
+        height: 240px;
+    }
+    
+    .sudoku-grid.size-9 {
         width: 280px;
         height: 280px;
     }
