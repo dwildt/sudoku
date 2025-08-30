@@ -15,8 +15,12 @@ class SudokuGenerator {
 }
 
 class SudokuValidator {
-    static isComplete() { return false; }
-    static getHint() { return { row: 0, col: 0, value: 1 }; }
+    static isComplete() {
+        return false;
+    }
+    static getHint() {
+        return { row: 0, col: 0, value: 1 };
+    }
 }
 
 class SudokuGame {
@@ -75,12 +79,12 @@ class SudokuGame {
             date: new Date().toISOString(),
             hintsUsed: this.hintsUsed
         };
-        
+
         records.push(newRecord);
         records.sort((a, b) => a.time - b.time);
-        
+
         const isNewBest = records[0] === newRecord;
-        
+
         localStorage.setItem('sudoku-records', JSON.stringify(records.slice(0, 10)));
         return isNewBest;
     }
@@ -141,7 +145,7 @@ describe('SudokuGame', () => {
     describe('newGame', () => {
         test('should generate new puzzle and solution', () => {
             game.newGame();
-            
+
             expect(game.currentPuzzle).toBeTruthy();
             expect(game.currentSolution).toBeTruthy();
             expect(game.playerGrid).toBeTruthy();
@@ -150,7 +154,7 @@ describe('SudokuGame', () => {
 
         test('should identify given cells correctly', () => {
             game.newGame();
-            
+
             expect(game.givenCells).toBeInstanceOf(Set);
             expect(game.givenCells.size).toBeGreaterThan(0);
         });
@@ -166,7 +170,7 @@ describe('SudokuGame', () => {
                 const givenCell = Array.from(game.givenCells)[0];
                 const [row, col] = givenCell.split('-').map(Number);
                 const originalValue = game.playerGrid[row][col];
-                
+
                 game.makeMove(row, col, 9);
                 expect(game.playerGrid[row][col]).toBe(originalValue);
             } else {
@@ -183,9 +187,11 @@ describe('SudokuGame', () => {
                         break;
                     }
                 }
-                if (emptyCell) break;
+                if (emptyCell) {
+                    break;
+                }
             }
-            
+
             if (emptyCell) {
                 game.makeMove(emptyCell.row, emptyCell.col, 5);
                 expect(game.playerGrid[emptyCell.row][emptyCell.col]).toBe(5);
@@ -206,10 +212,10 @@ describe('SudokuGame', () => {
         test('should save record to localStorage', () => {
             game.currentDifficulty = 'easy';
             game.hintsUsed = 2;
-            
+
             const time = 120000; // 2 minutes
             game.saveRecord(time);
-            
+
             const records = JSON.parse(localStorage.getItem('sudoku-records'));
             expect(records).toHaveLength(1);
             expect(records[0].time).toBe(time);
@@ -219,18 +225,18 @@ describe('SudokuGame', () => {
 
         test('should return true for new best record', () => {
             game.currentDifficulty = 'medium';
-            
+
             const isRecord = game.saveRecord(60000);
             expect(isRecord).toBe(true);
         });
 
         test('should sort records by time', () => {
             game.currentDifficulty = 'medium';
-            
+
             game.saveRecord(120000); // 2 minutes
             game.saveRecord(60000);  // 1 minute
             game.saveRecord(180000); // 3 minutes
-            
+
             const records = JSON.parse(localStorage.getItem('sudoku-records'));
             expect(records[0].time).toBe(60000);  // Best time first
             expect(records[1].time).toBe(120000);
@@ -249,7 +255,7 @@ describe('SudokuGame', () => {
                 { time: 60000, difficulty: 'easy', date: '2023-01-01', hintsUsed: 0 }
             ];
             localStorage.setItem('sudoku-records', JSON.stringify(testRecords));
-            
+
             const records = game.getRecords();
             expect(records).toEqual(testRecords);
         });
@@ -259,7 +265,7 @@ describe('SudokuGame', () => {
         test('should reset player grid to original puzzle', () => {
             game.newGame();
             const originalPuzzle = game.currentPuzzle.map(row => [...row]);
-            
+
             // Make some moves
             for (let row = 0; row < 9; row++) {
                 for (let col = 0; col < 9; col++) {
@@ -269,7 +275,7 @@ describe('SudokuGame', () => {
                     }
                 }
             }
-            
+
             game.resetGame();
             expect(game.playerGrid).toEqual(originalPuzzle);
             expect(game.selectedCell).toBeNull();

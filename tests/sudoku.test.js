@@ -9,7 +9,7 @@ class SudokuGenerator {
 
     isValid(grid, row, col, num) {
         const size = grid.length;
-        
+
         for (let i = 0; i < size; i++) {
             if (grid[row][i] === num || grid[i][col] === num) {
                 return false;
@@ -32,7 +32,7 @@ class SudokuGenerator {
     generatePuzzle(difficulty = 'medium') {
         const puzzle = Array(this.size).fill().map(() => Array(this.size).fill(0));
         const solution = Array(this.size).fill().map(() => Array(this.size).fill(0));
-        
+
         // Simple test puzzles for different sizes
         if (this.size === 4) {
             puzzle[0][0] = 1;
@@ -47,7 +47,7 @@ class SudokuGenerator {
             solution[0][0] = 5;
             solution[0][1] = 3;
         }
-        
+
         return { puzzle, solution };
     }
 
@@ -61,11 +61,15 @@ class SudokuGenerator {
 
 class SudokuValidator {
     static getBoxDimensions(size) {
-        if (size === 4) return { width: 2, height: 2 };
-        if (size === 6) return { width: 3, height: 2 };
+        if (size === 4) {
+            return { width: 2, height: 2 };
+        }
+        if (size === 6) {
+            return { width: 3, height: 2 };
+        }
         return { width: 3, height: 3 };
     }
-    
+
     static isValidMove(grid, row, col, num) {
         const tempGrid = grid.map(row => [...row]);
         tempGrid[row][col] = num;
@@ -90,7 +94,7 @@ class SudokuValidator {
     static isValidPosition(grid, row, col, num) {
         const size = grid.length;
         const { width, height } = this.getBoxDimensions(size);
-        
+
         for (let i = 0; i < size; i++) {
             if (i !== col && grid[row][i] === num) {
                 return false;
@@ -134,11 +138,11 @@ class SudokuValidator {
                 }
             }
         }
-        
+
         if (emptyCells.length === 0) {
             return null;
         }
-        
+
         const randomCell = emptyCells[0];
         return {
             row: randomCell.row,
@@ -183,7 +187,7 @@ describe('SudokuGenerator', () => {
     describe('generatePuzzle', () => {
         test('should generate valid puzzle with solution', () => {
             const { puzzle, solution } = generator.generatePuzzle('easy');
-            
+
             expect(puzzle).toHaveLength(9);
             expect(solution).toHaveLength(9);
             expect(puzzle[0]).toHaveLength(9);
@@ -194,7 +198,7 @@ describe('SudokuGenerator', () => {
             // Since our mock returns the same puzzle, we'll test that the function accepts difficulty
             const easy = generator.generatePuzzle('easy');
             const hard = generator.generatePuzzle('hard');
-            
+
             expect(easy.puzzle).toBeDefined();
             expect(hard.puzzle).toBeDefined();
             expect(easy.solution).toBeDefined();
@@ -207,7 +211,7 @@ describe('SudokuGenerator', () => {
             const array = [1, 2, 3, 4, 5];
             const original = [...array];
             generator.shuffleArray(array);
-            
+
             expect(array).toHaveLength(original.length);
             expect(array.sort()).toEqual(original.sort());
         });
@@ -264,9 +268,9 @@ describe('SudokuValidator', () => {
                 [2,8,7,4,1,9,6,3,5],
                 [3,4,5,2,8,6,1,7,9]
             ];
-            
+
             const hint = SudokuValidator.getHint(puzzle, solution);
-            
+
             expect(hint).toHaveProperty('row');
             expect(hint).toHaveProperty('col');
             expect(hint).toHaveProperty('value');
@@ -290,7 +294,7 @@ describe('SudokuValidator', () => {
                 [2,8,7,4,1,9,6,3,5],
                 [3,4,5,2,8,6,1,7,9]
             ];
-            
+
             const hint = SudokuValidator.getHint(grid, grid);
             expect(hint).toBeNull();
         });
@@ -342,7 +346,7 @@ describe('SudokuGenerator 4x4', () => {
     describe('generatePuzzle', () => {
         test('should generate 4x4 puzzle', () => {
             const { puzzle, solution } = generator.generatePuzzle('easy');
-            
+
             expect(puzzle).toHaveLength(4);
             expect(solution).toHaveLength(4);
             expect(puzzle[0]).toHaveLength(4);
@@ -398,7 +402,7 @@ describe('SudokuGenerator 6x6', () => {
     describe('generatePuzzle', () => {
         test('should generate 6x6 puzzle', () => {
             const { puzzle, solution } = generator.generatePuzzle('easy');
-            
+
             expect(puzzle).toHaveLength(6);
             expect(solution).toHaveLength(6);
             expect(puzzle[0]).toHaveLength(6);

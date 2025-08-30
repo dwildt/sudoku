@@ -8,7 +8,7 @@ class SudokuGenerator {
 
     isValid(grid, row, col, num) {
         const size = grid.length;
-        
+
         for (let i = 0; i < size; i++) {
             if (grid[row][i] === num || grid[i][col] === num) {
                 return false;
@@ -54,10 +54,10 @@ class SudokuGenerator {
         for (let row = 0; row < size; row++) {
             for (let col = 0; col < size; col++) {
                 if (grid[row][col] === 0) {
-                    const numbers = Array.from({length: size}, (_, i) => i + 1);
+                    const numbers = Array.from({ length: size }, (_, i) => i + 1);
                     this.shuffleArray(numbers);
-                    
-                    for (let num of numbers) {
+
+                    for (const num of numbers) {
                         if (this.isValid(grid, row, col, num)) {
                             grid[row][col] = num;
                             if (this.fillGrid(grid)) {
@@ -83,20 +83,20 @@ class SudokuGenerator {
     removeNumbers(grid, difficulty) {
         const size = grid.length;
         const totalCells = size * size;
-        
+
         const difficultyMap = {
             4: { 'easy': Math.floor(totalCells * 0.4), 'medium': Math.floor(totalCells * 0.5), 'hard': Math.floor(totalCells * 0.6) },
             6: { 'easy': Math.floor(totalCells * 0.45), 'medium': Math.floor(totalCells * 0.55), 'hard': Math.floor(totalCells * 0.65) },
             9: { 'easy': 35, 'medium': 45, 'hard': 55 }
         };
-        
+
         const cellsToRemove = difficultyMap[size][difficulty] || difficultyMap[size]['medium'];
         let removed = 0;
-        
+
         while (removed < cellsToRemove) {
             const row = Math.floor(Math.random() * size);
             const col = Math.floor(Math.random() * size);
-            
+
             if (grid[row][col] !== 0) {
                 grid[row][col] = 0;
                 removed++;
@@ -130,13 +130,13 @@ class SudokuGenerator {
                 }
             }
         }
-        
+
         solutions.push(grid.map(row => [...row]));
     }
 
     generatePuzzle(difficulty = 'medium') {
         let baseSolution;
-        
+
         if (this.size === 4) {
             baseSolution = [
                 [1, 2, 3, 4],
@@ -166,10 +166,10 @@ class SudokuGenerator {
                 [3,4,5,2,8,6,1,7,9]
             ];
         }
-        
+
         const puzzle = baseSolution.map(row => [...row]);
         this.removeNumbers(puzzle, difficulty);
-        
+
         return {
             puzzle,
             solution: baseSolution.map(row => [...row])
@@ -183,10 +183,14 @@ class SudokuValidator {
         tempGrid[row][col] = num;
         return this.isValidGrid(tempGrid, row, col);
     }
-    
+
     static getBoxDimensions(size) {
-        if (size === 4) return { width: 2, height: 2 };
-        if (size === 6) return { width: 3, height: 2 };
+        if (size === 4) {
+            return { width: 2, height: 2 };
+        }
+        if (size === 6) {
+            return { width: 3, height: 2 };
+        }
         return { width: 3, height: 3 };
     }
 
@@ -208,7 +212,7 @@ class SudokuValidator {
     static isValidPosition(grid, row, col, num) {
         const size = grid.length;
         const { width, height } = this.getBoxDimensions(size);
-        
+
         for (let i = 0; i < size; i++) {
             if (i !== col && grid[row][i] === num) {
                 return false;
@@ -253,11 +257,11 @@ class SudokuValidator {
                 }
             }
         }
-        
+
         if (emptyCells.length === 0) {
             return null;
         }
-        
+
         const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
         return {
             row: randomCell.row,
