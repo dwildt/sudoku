@@ -14,14 +14,6 @@ class SudokuGenerator {
     }
 }
 
-class SudokuValidator {
-    static isComplete() {
-        return false;
-    }
-    static getHint() {
-        return { row: 0, col: 0, value: 1 };
-    }
-}
 
 class SudokuGame {
     constructor() {

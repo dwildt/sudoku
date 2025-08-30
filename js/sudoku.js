@@ -1,4 +1,4 @@
-class SudokuGenerator {
+export class SudokuGenerator {
     constructor(size = 9) {
         this.size = size;
         this.grid = Array(size).fill().map(() => Array(size).fill(0));
@@ -177,11 +177,11 @@ class SudokuGenerator {
     }
 }
 
-class SudokuValidator {
+export class SudokuValidator {
     static isValidMove(grid, row, col, num) {
         const tempGrid = grid.map(row => [...row]);
         tempGrid[row][col] = num;
-        return this.isValidGrid(tempGrid, row, col);
+        return this.isValidGrid(tempGrid);
     }
 
     static getBoxDimensions(size) {
@@ -194,7 +194,7 @@ class SudokuValidator {
         return { width: 3, height: 3 };
     }
 
-    static isValidGrid(grid, changedRow = -1, changedCol = -1) {
+    static isValidGrid(grid) {
         const size = grid.length;
         for (let row = 0; row < size; row++) {
             for (let col = 0; col < size; col++) {

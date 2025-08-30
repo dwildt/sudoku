@@ -45,7 +45,9 @@ python -m http.server 8000
 npx http-server
 ```
 
-## 🧪 Executar Testes
+## 🧪 Desenvolvimento
+
+### Executar Testes
 
 Para executar os testes unitários:
 
@@ -53,17 +55,47 @@ Para executar os testes unitários:
 # Instalar dependências
 npm install
 
-# Executar testes
+# Executar todos os testes
 npm test
 
-# Executar testes em modo watch
+# Executar testes em modo watch (re-executa quando arquivos mudam)
 npm run test:watch
 
-# Executar testes com coverage
+# Executar testes com relatório de cobertura
 npm run test:coverage
 ```
 
-Consulte o arquivo [testing.md](testing.md) para mais detalhes sobre os testes.
+### Validação de Código (Lint)
+
+Para verificar e corrigir a qualidade do código:
+
+```bash
+# Verificar problemas de lint
+npm run lint
+
+# Corrigir automaticamente problemas de lint (quando possível)
+npm run lint:fix
+
+# Executar ESLint diretamente
+npx eslint js/ tests/ --ext .js
+
+# ESLint com correção automática
+npx eslint js/ tests/ --ext .js --fix
+```
+
+### Cobertura de Testes
+
+O projeto possui **54 testes** cobrindo:
+- **Geração de Sudoku**: Algoritmos para grids 4x4, 6x6 e 9x9
+- **Validação**: Verificação de movimentos e soluções
+- **Lógica do jogo**: Timer, recordes, dicas e reset
+- **Internacionalização**: Sistema de traduções com fallbacks
+
+### Qualidade do Código
+
+- **ES6 Modules**: Código organizado em módulos com imports/exports
+- **Zero Lint Warnings**: Código completamente limpo seguindo padrões ESLint
+- **Tratamento de Erro Robusto**: Fallbacks e mensagens amigáveis ao usuário
 
 ## 🎯 Como Jogar
 

@@ -29,7 +29,7 @@ class SudokuGenerator {
         return true;
     }
 
-    generatePuzzle(difficulty = 'medium') {
+    generatePuzzle() {
         const puzzle = Array(this.size).fill().map(() => Array(this.size).fill(0));
         const solution = Array(this.size).fill().map(() => Array(this.size).fill(0));
 

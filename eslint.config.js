@@ -13,7 +13,7 @@ export default [
         files: ['js/**/*.js'],
         languageOptions: {
             ecmaVersion: 'latest',
-            sourceType: 'script',
+            sourceType: 'module',
             globals: {
                 window: 'readonly',
                 document: 'readonly',
@@ -50,7 +50,7 @@ export default [
         files: ['tests/**/*.js'],
         languageOptions: {
             ecmaVersion: 'latest',
-            sourceType: 'script',
+            sourceType: 'module',
             globals: {
                 console: 'readonly',
                 global: 'writable',

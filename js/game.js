@@ -1,4 +1,7 @@
-class SudokuGame {
+import { SudokuGenerator, SudokuValidator } from './sudoku.js';
+import { i18n } from './i18n.js';
+
+export class SudokuGame {
     constructor() {
         this.currentSize = 9;
         this.generator = new SudokuGenerator(this.currentSize);

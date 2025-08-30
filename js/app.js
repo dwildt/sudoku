@@ -1,4 +1,7 @@
-class SudokuApp {
+import { SudokuGame } from './game.js';
+import { i18n } from './i18n.js';
+
+export class SudokuApp {
     constructor() {
         this.game = null;
         this.currentTheme = localStorage.getItem('sudoku-theme') || 'wildtech';
@@ -49,3 +52,5 @@ class SudokuApp {
 document.addEventListener('DOMContentLoaded', () => {
     new SudokuApp();
 });
+
+export default SudokuApp;
