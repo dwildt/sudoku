@@ -30,14 +30,16 @@ class I18n {
     async setLanguage(lang) {
         this.currentLang = lang;
         localStorage.setItem('sudoku-language', lang);
-        
+
         try {
             const response = await fetch(`i18n/${lang}.json`);
             this.translations = await response.json();
             this.updateUI();
-            
+
             const select = document.getElementById('language-select');
-            if (select) select.value = lang;
+            if (select) {
+                select.value = lang;
+            }
         } catch (error) {
             console.error('Error loading language:', error);
         }
@@ -68,16 +70,16 @@ describe('I18n', () => {
     beforeEach(() => {
         localStorage.clear();
         fetch.mockClear();
-        
+
         // Mock successful fetch response
         fetch.mockResolvedValue({
             json: async () => ({
-                "title": "Sudoku",
-                "newGame": "New Game",
-                "difficulty.easy": "Easy"
+                'title': 'Sudoku',
+                'newGame': 'New Game',
+                'difficulty.easy': 'Easy'
             })
         });
-        
+
         i18n = new I18n();
     });
 
@@ -132,9 +134,9 @@ describe('I18n', () => {
         test('should handle fetch errors gracefully', async () => {
             fetch.mockRejectedValueOnce(new Error('Network error'));
             fetch.mockResolvedValueOnce({
-                json: async () => ({ "title": "Sudoku" })
+                json: async () => ({ 'title': 'Sudoku' })
             });
-            
+
             await i18n.loadTranslations();
             expect(fetch).toHaveBeenCalledTimes(2);
             expect(i18n.currentLang).toBe('pt');
@@ -144,10 +146,10 @@ describe('I18n', () => {
     describe('updateUI', () => {
         test('should update elements with data-i18n attributes', async () => {
             await i18n.loadTranslations();
-            
+
             const titleElement = document.querySelector('[data-i18n="title"]');
             const buttonElement = document.querySelector('[data-i18n="newGame"]');
-            
+
             expect(titleElement.textContent).toBe('Sudoku');
             expect(buttonElement.textContent).toBe('New Game');
         });

@@ -26,12 +26,12 @@ class I18n {
     async setLanguage(lang) {
         this.currentLang = lang;
         localStorage.setItem('sudoku-language', lang);
-        
+
         try {
             const response = await fetch(`i18n/${lang}.json`);
             this.translations = await response.json();
             this.updateUI();
-            
+
             document.getElementById('language-select').value = lang;
         } catch (error) {
             console.error('Error loading language:', error);

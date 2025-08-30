@@ -2,19 +2,19 @@ class SudokuApp {
     constructor() {
         this.game = null;
         this.currentTheme = localStorage.getItem('sudoku-theme') || 'wildtech';
-        
+
         this.initializeApp();
     }
 
     async initializeApp() {
         await i18n.loadTranslations();
-        
+
         this.setupTheme();
         this.setupEventListeners();
-        
+
         this.game = new SudokuGame();
         this.game.newGame();
-        
+
         document.getElementById('language-select').value = i18n.currentLang;
         document.getElementById('theme-select').value = this.currentTheme;
     }

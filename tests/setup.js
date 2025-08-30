@@ -19,8 +19,8 @@ global.alert = jest.fn();
 global.fetch = jest.fn(() =>
     Promise.resolve({
         json: () => Promise.resolve({
-            "title": "Sudoku",
-            "newGame": "New Game"
+            'title': 'Sudoku',
+            'newGame': 'New Game'
         })
     })
 );
