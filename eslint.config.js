@@ -23,7 +23,8 @@ export default [
                 alert: 'readonly',
                 setTimeout: 'readonly',
                 setInterval: 'readonly',
-                clearInterval: 'readonly'
+                clearInterval: 'readonly',
+                navigator: 'readonly'
             }
         },
         rules: {
@@ -58,6 +59,9 @@ export default [
                 document: 'readonly',
                 localStorage: 'readonly',
                 fetch: 'readonly',
+                navigator: 'readonly',
+                Event: 'readonly',
+                KeyboardEvent: 'readonly',
                 // Jest globals
                 describe: 'readonly',
                 test: 'readonly',
