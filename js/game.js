@@ -14,9 +14,11 @@ export class SudokuGame {
         this.startTime = null;
         this.currentDifficulty = 'medium';
         this.hintsUsed = 0;
+        this.hiddenInput = null;
 
         this.initializeEventListeners();
         this.loadRecords();
+        this.createHiddenInput();
     }
 
     initializeEventListeners() {
@@ -40,6 +42,33 @@ export class SudokuGame {
             this.generator = new SudokuGenerator(this.currentSize);
             this.newGame();
         });
+    }
+
+    // Detecta se está em um dispositivo móvel
+    isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+               ('ontouchstart' in window) ||
+               (navigator.maxTouchPoints > 0);
+    }
+
+    // Cria um input oculto para ativar o teclado mobile
+    createHiddenInput() {
+        this.hiddenInput = document.createElement('input');
+        this.hiddenInput.type = 'number';
+        this.hiddenInput.id = 'mobile-keyboard-input';
+        this.hiddenInput.style.position = 'absolute';
+        this.hiddenInput.style.left = '-9999px';
+        this.hiddenInput.style.top = '-9999px';
+        this.hiddenInput.style.opacity = '0';
+        this.hiddenInput.style.pointerEvents = 'none';
+        this.hiddenInput.inputMode = 'numeric';
+        this.hiddenInput.pattern = '[0-9]*';
+
+        // Adiciona listener para capturar entrada do teclado móvel
+        this.hiddenInput.addEventListener('input', (e) => this.handleMobileInput(e));
+        this.hiddenInput.addEventListener('keydown', (e) => this.handleMobileKeydown(e));
+
+        document.body.appendChild(this.hiddenInput);
     }
 
     newGame() {
@@ -104,6 +133,42 @@ export class SudokuGame {
         const cell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
         cell.classList.add('selected');
         this.selectedCell = { row, col };
+
+        // Se for dispositivo móvel, foca no input oculto para ativar o teclado
+        if (this.isMobileDevice() && this.hiddenInput) {
+            this.hiddenInput.value = '';
+            this.hiddenInput.focus();
+        }
+    }
+
+    handleMobileInput(e) {
+        if (!this.selectedCell) {
+            return;
+        }
+
+        const value = e.target.value;
+        const lastChar = value.slice(-1);
+
+        if (lastChar && lastChar >= '1' && lastChar <= this.currentSize.toString()) {
+            const num = parseInt(lastChar);
+            this.makeMove(this.selectedCell.row, this.selectedCell.col, num);
+        }
+
+        // Limpa o input para próxima entrada
+        e.target.value = '';
+    }
+
+    handleMobileKeydown(e) {
+        if (!this.selectedCell) {
+            return;
+        }
+
+        const { row, col } = this.selectedCell;
+
+        if (e.key === 'Backspace' || e.key === 'Delete') {
+            e.preventDefault();
+            this.makeMove(row, col, 0);
+        }
     }
 
     handleKeyPress(e) {

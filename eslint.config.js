@@ -23,7 +23,8 @@ export default [
                 alert: 'readonly',
                 setTimeout: 'readonly',
                 setInterval: 'readonly',
-                clearInterval: 'readonly'
+                clearInterval: 'readonly',
+                navigator: 'readonly'
             }
         },
         rules: {
