@@ -59,6 +59,9 @@ export default [
                 document: 'readonly',
                 localStorage: 'readonly',
                 fetch: 'readonly',
+                navigator: 'readonly',
+                Event: 'readonly',
+                KeyboardEvent: 'readonly',
                 // Jest globals
                 describe: 'readonly',
                 test: 'readonly',

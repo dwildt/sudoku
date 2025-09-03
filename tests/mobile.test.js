@@ -34,25 +34,6 @@ class MockSudokuGenerator {
     }
 }
 
-class MockSudokuValidator {
-    static isValidMove() {
-        return true;
-    }
-    
-    static isComplete() {
-        return false;
-    }
-    
-    static getHint() {
-        return { row: 0, col: 1, value: 1 };
-    }
-}
-
-// Mock i18n
-const mocki18n = {
-    t: (key) => key
-};
-
 // Create a mock SudokuGame for testing mobile functionality
 class MobileSudokuGame {
     constructor() {
@@ -68,8 +49,8 @@ class MobileSudokuGame {
     }
 
     isMobileDevice() {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
-               ('ontouchstart' in window) || 
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ||
+               ('ontouchstart' in window) ||
                (navigator.maxTouchPoints > 0);
     }
 
@@ -84,16 +65,16 @@ class MobileSudokuGame {
         this.hiddenInput.style.pointerEvents = 'none';
         this.hiddenInput.inputMode = 'numeric';
         this.hiddenInput.pattern = '[0-9]*';
-        
+
         this.hiddenInput.addEventListener('input', (e) => this.handleMobileInput(e));
         this.hiddenInput.addEventListener('keydown', (e) => this.handleMobileKeydown(e));
-        
+
         document.body.appendChild(this.hiddenInput);
     }
 
     selectCell(row, col) {
         this.selectedCell = { row, col };
-        
+
         if (this.isMobileDevice() && this.hiddenInput) {
             this.hiddenInput.value = '';
             this.hiddenInput.focus();
@@ -107,12 +88,12 @@ class MobileSudokuGame {
 
         const value = e.target.value;
         const lastChar = value.slice(-1);
-        
+
         if (lastChar && lastChar >= '1' && lastChar <= this.currentSize.toString()) {
             const num = parseInt(lastChar);
             this.makeMove(this.selectedCell.row, this.selectedCell.col, num);
         }
-        
+
         e.target.value = '';
     }
 
@@ -158,7 +139,7 @@ describe('Mobile Keyboard Functionality', () => {
             <div id="record-message"></div>
             <div id="records-list"></div>
         `;
-        
+
         game = new MobileSudokuGame();
     });
 
@@ -197,7 +178,7 @@ describe('Mobile Keyboard Functionality', () => {
 
     test('should handle mobile input correctly', () => {
         game.selectCell(0, 0);
-        
+
         // Simulate mobile input
         game.hiddenInput.value = '5';
         const inputEvent = new Event('input');
@@ -205,40 +186,40 @@ describe('Mobile Keyboard Functionality', () => {
             value: game.hiddenInput,
             enumerable: true
         });
-        
+
         game.handleMobileInput(inputEvent);
-        
+
         expect(game.lastMove).toEqual({ row: 0, col: 0, num: 5 });
         expect(game.hiddenInput.value).toBe('');
     });
 
     test('should handle mobile backspace correctly', () => {
         game.selectCell(1, 1);
-        
+
         // Simulate backspace key
         const keyEvent = new KeyboardEvent('keydown', { key: 'Backspace' });
         keyEvent.preventDefault = jest.fn();
-        
+
         game.handleMobileKeydown(keyEvent);
-        
+
         expect(game.lastMove).toEqual({ row: 1, col: 1, num: 0 });
         expect(keyEvent.preventDefault).toHaveBeenCalled();
     });
 
     test('should not handle input when no cell is selected', () => {
         game.selectedCell = null;
-        
+
         const inputEvent = new Event('input');
         game.hiddenInput.value = '3';
-        
+
         game.handleMobileInput(inputEvent);
-        
+
         expect(game.lastMove).toBeUndefined();
     });
 
     test('should reject invalid input values', () => {
         game.selectCell(2, 2);
-        
+
         // Test with invalid number (too high)
         game.hiddenInput.value = '10';
         const inputEvent = new Event('input');
@@ -246,25 +227,25 @@ describe('Mobile Keyboard Functionality', () => {
             value: game.hiddenInput,
             enumerable: true
         });
-        
+
         game.handleMobileInput(inputEvent);
-        
+
         expect(game.lastMove).toBeUndefined();
         expect(game.hiddenInput.value).toBe('');
     });
 
     test('should handle multiple characters and use last valid one', () => {
         game.selectCell(3, 3);
-        
+
         game.hiddenInput.value = '7';  // Use just a valid digit
         const inputEvent = new Event('input');
         Object.defineProperty(inputEvent, 'target', {
             value: game.hiddenInput,
             enumerable: true
         });
-        
+
         game.handleMobileInput(inputEvent);
-        
+
         expect(game.lastMove).toEqual({ row: 3, col: 3, num: 7 });
         expect(game.hiddenInput.value).toBe('');
     });
