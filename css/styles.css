@@ -248,12 +248,23 @@ body.severance-theme .sudoku-grid.size-9 .sudoku-cell:nth-child(n+46):nth-child(
 
 header {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 header h1 {
     font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+.settings {
+    margin-top: 30px;
     margin-bottom: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--wildtech-border);
+}
+
+body.severance-theme .settings {
+    border-top-color: var(--severance-border);
 }
 
 .controls {
@@ -261,7 +272,6 @@ header h1 {
     justify-content: center;
     gap: 20px;
     flex-wrap: wrap;
-    margin-bottom: 20px;
 }
 
 .controls > div {
@@ -540,12 +550,22 @@ footer a:hover {
     
     header h1 {
         font-size: 2em;
+        margin-bottom: 10px;
+    }
+
+    header {
+        margin-bottom: 15px;
     }
     
     .controls {
         flex-direction: column;
         align-items: center;
         gap: 10px;
+    }
+
+    .settings {
+        margin-top: 20px;
+        padding-top: 15px;
     }
     
     .sudoku-grid.size-4 {
